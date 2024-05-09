@@ -4,6 +4,8 @@ using Infraestructure.Command;
 using Infraestructure.Persistence;
 using Infraestructure.Query;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.OpenApi.Models;
+using System.Windows.Input;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +15,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "DemoSwaggerAnnotation",
+        Version = "v1",
+    });
+    c.EnableAnnotations();
+});
+
 
 // custom
 builder.Services.AddScoped<MarketDbContext>();
@@ -22,6 +33,11 @@ builder.Services.AddScoped<IProductQuery, ProductQuery> ();
 builder.Services.AddScoped<IProductCommand,ProductCommand>();
 builder.Services.AddScoped<ICategoryQuery, CategoryQuery>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ISaleService, SaleService>();
+builder.Services.AddScoped<ISaleQuery, SaleQuery>();
+builder.Services.AddScoped<ISaleCommand, SaleCommand>();
+builder.Services.AddScoped<ProductServiceUtils>();
+
 
 
 
@@ -41,3 +57,15 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+
+//builder.Services.AddSwaggerGen(c =>
+//{
+//    c.SwaggerDoc("v1", new OpenApiInfo
+//    {
+//        Title = "DemoSwaggerAnnotation",
+//        Version = "v1",
+//    });
+//    c.EnableAnnotations();
+//});

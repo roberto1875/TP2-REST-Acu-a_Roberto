@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Application.Exceptions.Exceptions;
 
 namespace Application.UseCase.Service
 {
@@ -32,5 +33,20 @@ namespace Application.UseCase.Service
             } 
             return null;
         }
+
+      
+        public async Task<bool> CategoryExists(int id)
+        {
+            var category = await _query.GetCategoryById(id);
+            return category != null;
+        }
+
+
+
     }
+
+
+
+
+
 }

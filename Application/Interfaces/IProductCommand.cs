@@ -9,6 +9,8 @@ namespace Application.Interfaces
 {
    public interface IProductCommand
     {
-        Task InsertProduct(Product product);
+        public Task InsertProduct(Product product);
+        public Task UpDateProductComand(Product product);
+        public Task DeleteProduct(Product product);
     }
 }

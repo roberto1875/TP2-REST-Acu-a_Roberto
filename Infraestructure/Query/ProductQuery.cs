@@ -1,4 +1,6 @@
 ﻿using Application.Interfaces;
+using Application.Models;
+using Azure.Core;
 using Domain.Entities;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -27,9 +29,21 @@ namespace Infraestructure.Query
             return products;
         }
 
-        public Task<Product> GetProductById(Guid id)
+
+        public async Task<Product> GetProductById(Guid id)
         {
-            throw new NotImplementedException();
+
+            var product = await _context.Products
+                .Include(p => p.CategoryTable)
+                .FirstOrDefaultAsync(p => p.ProductId == id);
+           
+            return product;
         }
+        
+        public async Task<bool> ProductExistsByName(string name)
+        {
+            return await _context.Products.AnyAsync(p => p.Name == name);
+        }
+
     }
 }

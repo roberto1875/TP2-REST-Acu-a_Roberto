@@ -12,5 +12,9 @@ namespace Application.Interfaces
     {
         public Task<List<Product>> GetAllProducts();
         public Task<CreateProductResponce> CreateProduct(CreateProductRequest request);
+        public Task<List<ProductGetResponse>> GetProductFilter(ProductFilterOptions filter);
+        public Task<ProductResponse> ProductDetailService(Guid id);
+        public Task<ProductResponse> UpDateProductService(Guid id, ProductRequest request);
+        public Task<ProductResponse> DeleteProductService(Guid id);
     }
 }

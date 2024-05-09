@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
 using Infraestructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,5 +25,19 @@ namespace Infraestructure.Command
             await _context.SaveChangesAsync();
 
         }
+        
+        public async Task UpDateProductComand(Product product)
+        {
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteProduct(Product product)
+        {
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+        }
+
+
     }
 }

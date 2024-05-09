@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Models;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,8 @@ namespace Application.Interfaces
     {
         public Task<List<Product>> GetAllProductQuery();
         public Task<Product> GetProductById(Guid id);
+        public Task<bool> ProductExistsByName(string name);
+
+
     }
 }
