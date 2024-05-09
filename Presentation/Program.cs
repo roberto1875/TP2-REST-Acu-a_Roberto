@@ -3,9 +3,8 @@ using Application.UseCase.Service;
 using Infraestructure.Command;
 using Infraestructure.Persistence;
 using Infraestructure.Query;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.OpenApi.Models;
-using System.Windows.Input;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +36,7 @@ builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<ISaleQuery, SaleQuery>();
 builder.Services.AddScoped<ISaleCommand, SaleCommand>();
 builder.Services.AddScoped<ProductServiceUtils>();
+builder.Services.AddScoped<SaleServiceUtils>();
 
 
 
@@ -58,14 +58,3 @@ app.MapControllers();
 
 app.Run();
 
-
-
-//builder.Services.AddSwaggerGen(c =>
-//{
-//    c.SwaggerDoc("v1", new OpenApiInfo
-//    {
-//        Title = "DemoSwaggerAnnotation",
-//        Version = "v1",
-//    });
-//    c.EnableAnnotations();
-//});

@@ -1,15 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models;
-using Azure.Core;
 using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application.UseCase.Service
 {
@@ -30,7 +22,7 @@ namespace Application.UseCase.Service
 
         public async Task<ProductResponse> CreateProduct(ProductRequest request)
         {
-            var existeName = await _productServiceUtils.FilterProductName(request);
+            await _productServiceUtils.FilterProductName(request);
             await _productServiceUtils.CheckRequest(request);
 
             var product = new Product
@@ -61,34 +53,12 @@ namespace Application.UseCase.Service
 
         }
 
-        public async Task<List<Product>> GetAllProducts()
-        {
-
-            List<Product> products = await _query.GetAllProductQuery();
-            return products;
-        }
-
-
+        
 
         public async Task<List<ProductGetResponse>> GetProductFilter(ProductFilterOptions filter)
         {
 
-            List<Product> products = await _query.GetAllProductQuery();
-
-
-            if (filter.Categories != null && filter.Categories.Length > 0)
-            {
-                products = products.Where(p => filter.Categories.Contains(p.Category)).ToList();
-            }
-            if (!string.IsNullOrEmpty(filter.Name))
-            {
-                products = products.Where(p => p.Name.IndexOf(filter.Name, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-            }
-
-            if (filter.Limit > 0)
-            {
-                products = products.Skip(filter.Offset).Take(filter.Limit).ToList();
-            }
+            var products = await _productServiceUtils.FilterProduct(filter);
 
             List<ProductGetResponse> response = products.Select(p => new ProductGetResponse
             {
@@ -106,27 +76,12 @@ namespace Application.UseCase.Service
 
         public async Task<ProductResponse> ProductDetailService(Guid id)
         {
-            
+
             await _productServiceUtils.ProductExists(id);
-            
+
             var product = await _query.GetProductById(id);
-            var productResponse = new ProductResponse
-            {
 
-                Id = product.ProductId,
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                Discount = product.Discount,
-                ImageUrl = product.ImageUrl,
-                Category = new CategoryResponse
-                {
-                    CategoryId = product.CategoryTable.CategoryId,
-                    Name = product.CategoryTable.Name
-                }
-
-            };
-            return productResponse;
+            return CreateProductResponse(product);
 
         }
 
@@ -136,9 +91,7 @@ namespace Application.UseCase.Service
         public async Task<ProductResponse> UpDateProductService(Guid id, ProductRequest request)
         {
             await _productServiceUtils.ProductExists(id);
-           
             await _productServiceUtils.CheckRequest(request);
-
             await _productServiceUtils.ChekcProductName(id, request);
 
             var product = await _query.GetProductById(id);
@@ -151,37 +104,29 @@ namespace Application.UseCase.Service
             product.Category = request.Category;
 
 
-            var productUpDate = _command.UpDateProductComand(product);
+           await _command.UpDateProductComand(product);
 
-            var productResponse = new ProductResponse
-            {
-
-                Id = product.ProductId,
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                Discount = product.Discount,
-                ImageUrl = product.ImageUrl,
-                Category = new CategoryResponse
-                {
-                    CategoryId = product.CategoryTable.CategoryId,
-                    Name = product.CategoryTable.Name
-                }
-
-            };
-
-            return productResponse;
+           return CreateProductResponse(product);
         }
 
 
         public async Task<ProductResponse> DeleteProductService(Guid id)
         {
-            var product = await _query.GetProductById(id);
-           
+          
             await _productServiceUtils.ProductExists(id);
             await _productServiceUtils.ChekcProductSale(id);
+
+            var product = await _query.GetProductById(id);
+
             await _command.DeleteProduct(product);
-            
+
+            return CreateProductResponse(product);
+        }
+
+
+
+        private ProductResponse CreateProductResponse(Product product)
+        {
             var productResponse = new ProductResponse
             {
 
@@ -200,8 +145,6 @@ namespace Application.UseCase.Service
 
             return productResponse;
         }
-
-
     }
 }
 

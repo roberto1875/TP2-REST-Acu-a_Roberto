@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models;
 using Domain.Entities;
-using static Application.Exceptions.Exceptions;
+
 
 namespace Application.UseCase.Service
 {
@@ -11,15 +11,15 @@ namespace Application.UseCase.Service
         private readonly ISaleQuery _querySale;
         private readonly IProductQuery _productQuery;
         private readonly ISaleCommand _saleCommand;
+        private readonly SaleServiceUtils _saleService;
 
-
-        public SaleService(ISaleQuery querySale, IProductQuery productQuery, ISaleCommand saleCommand)
+        public SaleService(ISaleQuery querySale, IProductQuery productQuery, ISaleCommand saleCommand, SaleServiceUtils saleService)
         {
             _querySale = querySale;
             _productQuery = productQuery;
             _saleCommand = saleCommand;
+            _saleService = saleService;
         }
-
 
         public async Task<List<SaleGetResponse>> GetSaleFilter(DateTime? fromDate, DateTime? toDate)
         {
@@ -53,17 +53,13 @@ namespace Application.UseCase.Service
 
             foreach (var s in request.Products)
             {
-                if (s.Quantity <= 0)
-                {
-                    errors.Add($"La cantidad debe ser mayor a cero."); //sacar 
-                    continue;
-                }
 
+                _saleService.CheckQuantity(s, errors);
                 var product = await _productQuery.GetProductById(s.ProductId);
-
-                if (product != null) //sacar
+                
+                
+                if (product != null)
                 {
-
 
                     subtotal += product.Price * s.Quantity;
                     decimal discountProducts = product.Price - (product.Price * (product.Discount / 100.0m));
@@ -78,15 +74,12 @@ namespace Application.UseCase.Service
                         Discount = product.Discount
                     };
 
-
-
                     sale.SalesProducts.Add(newSaleProduct);
 
                 }
-
                 else
                 {
-                    errors.Add($"Producto con ID no encontrado.");
+                    _saleService.ProductNotFound(s.ProductId, errors);
                 }
             }
 
@@ -95,20 +88,30 @@ namespace Application.UseCase.Service
             sale.TotalDiscount=totalDiscount;
             sale.TotalPay = (subtotal - totalDiscount) * 1.21m;
 
-            if (sale.TotalPay != request.TotalPayed)
-            {
-                errors.Add($"El total calculado no coincide con el total pagado.");
-            }                                                                       //sacar
 
-            if (errors.Any())
-            {
-                throw new BadRequestException(string.Join(" ", errors));
-            }
-           
-
+            _saleService.ChekTotalPay(sale, request, errors);
+            _saleService.ErrorsList(errors);
             await _saleCommand.AddSale(sale);
 
-            SaleResponse response = new SaleResponse
+            return CreateSaleResponse(sale);
+
+        }
+
+
+        public async Task<SaleResponse> SaleDetailService(int id)
+        {
+            var sale = await _querySale.GetSaleById(id);
+            
+            _saleService.SaleNotFound(id, sale);
+            return CreateSaleResponse(sale);
+
+        }
+
+
+
+        private SaleResponse CreateSaleResponse(Sale sale)
+        {
+            return new SaleResponse
             {
                 Id = sale.SaleId,
                 TotalPay = sale.TotalPay,
@@ -119,51 +122,15 @@ namespace Application.UseCase.Service
                 Date = sale.Date,
                 Products = sale.SalesProducts.Select(sp => new SaleProductReponse
                 {
-
                     Id = sp.ShoppingCartId,
-                    ProductId = sp.ProductTable.ProductId,
+                    ProductId = sp.Product,
                     Quantity = sp.Quantity,
                     Price = sp.Price,
                     Discount = sp.Discount
-
-                }).ToList()
-            };
-                 return  response;
-        }
-
-
-        public async Task<SaleResponse> SaleDetailService(int id)
-        {
-            var sale = await _querySale.GetSaleById(id);
-
-            if (sale == null)
-            {                                                           //sacar afuera
-                throw new SaleNotFoundException(id);
-            }
-
-            SaleResponse response = new SaleResponse
-            {
-                Id = sale.SaleId,
-                TotalPay = sale.TotalPay,
-                TotalQuantity =sale.SalesProducts.Sum(sp => sp.Quantity),
-                Subtotal = sale.Subtotal,
-                TotalDiscount = sale.TotalDiscount,
-                Taxes = sale.Taxes,
-                Date = sale.Date,
-                Products = sale.SalesProducts.Select(sp => new SaleProductReponse
-                {
-                     Id = sp.ShoppingCartId,
-                     ProductId = sp.Product,
-                     Quantity= sp.Quantity,
-                     Price = sp.Price,
-                     Discount =sp.Discount
                 }).ToList()
             };
 
-            return response;
         }
-
-
     }
 
 

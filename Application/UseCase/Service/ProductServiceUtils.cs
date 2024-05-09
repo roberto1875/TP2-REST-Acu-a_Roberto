@@ -1,6 +1,5 @@
 ﻿using Application.Interfaces;
 using Application.Models;
-using Azure.Core;
 using Domain.Entities;
 using static Application.Exceptions.Exceptions;
 
@@ -28,6 +27,29 @@ namespace Application.UseCase.Service
             }
 
         }
+
+        public async Task<List<Product>> FilterProduct(ProductFilterOptions filter)
+        {
+
+            var products = await _query.GetAllProductQuery();
+
+            if (filter.Categories != null && filter.Categories.Length > 0)
+            {
+                products = products.Where(p => filter.Categories.Contains(p.Category)).ToList();
+            }
+            if (!string.IsNullOrEmpty(filter.Name))
+            {
+                products = products.Where(p => p.Name.IndexOf(filter.Name, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+
+            if (filter.Limit > 0)
+            {
+                products = products.Skip(filter.Offset).Take(filter.Limit).ToList();
+            }
+
+            return products;
+        }
+    
 
         public async Task<ProductRequest> FilterProductName(ProductRequest request)
         {
