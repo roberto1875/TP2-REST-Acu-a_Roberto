@@ -29,7 +29,7 @@ namespace Application.UseCase.Service
 
         }
 
-        public async Task<CreateProductRequest> FilterProductName(CreateProductRequest request)
+        public async Task<ProductRequest> FilterProductName(ProductRequest request)
         {
             List<Product> products = await _query.GetAllProductQuery();
             var existingProduct = products.FirstOrDefault(p => p.Name == request.Name);

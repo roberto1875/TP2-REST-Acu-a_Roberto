@@ -10,7 +10,7 @@ namespace Application.Interfaces
 {
     public interface ICategoryService
     {
-        public Task<CategoryResponce> GetCategoryById(int id);
+        public Task<CategoryResponse> GetCategoryById(int id);
         public Task<bool> CategoryExists(int id);
     }
 }

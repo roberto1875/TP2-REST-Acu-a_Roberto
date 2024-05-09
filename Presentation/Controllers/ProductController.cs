@@ -32,7 +32,7 @@ namespace Presentation.Controllers
         [SwaggerResponse(201, Description = "Producto creado con éxito", Type = typeof(ProductResponse))]
         [SwaggerResponse(400, Description = "Solicitud incorrecta.", Type = typeof(ApiError))]
         [SwaggerResponse(409, Description = "Conflicto, el producto ya existe.", Type = typeof(ApiError))]
-        public async Task<IActionResult> CreateProduct(CreateProductRequest request)
+        public async Task<IActionResult> CreateProduct(ProductRequest request)
         {
            
             try
@@ -46,11 +46,11 @@ namespace Presentation.Controllers
                 return new JsonResult(new ApiError(ex.Message)) { StatusCode = 409 };
                 
             }
-            //catch (ConflictProductException ex)
-            //{
-            //    return new JsonResult(new ApiError(ex.Message)) { StatusCode = 400 };
+            catch (BadRequestException ex)
+            {
+                return new JsonResult(new ApiError(ex.Message)) { StatusCode = 400 };
 
-            //}
+            }
 
         }
 

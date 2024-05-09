@@ -1,14 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models;
-using Azure.Core;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using static Application.Exceptions.Exceptions;
 
 namespace Application.UseCase.Service
 {
@@ -56,31 +49,62 @@ namespace Application.UseCase.Service
             decimal subtotal = 0;
             decimal totalDiscount = 0;
 
+            List<string> errors = new List<string>();
+
             foreach (var s in request.Products)
             {
+                if (s.Quantity <= 0)
+                {
+                    errors.Add($"La cantidad debe ser mayor a cero."); //sacar 
+                    continue;
+                }
+
                 var product = await _productQuery.GetProductById(s.ProductId);
 
-                subtotal += product.Price * s.Quantity;
-                decimal discountProducts = product.Price - (product.Price * (product.Discount / 100.0m));
-                totalDiscount += (product.Price * s.Quantity) - (discountProducts * s.Quantity);
-
-
-                var newSaleProduct = new SaleProduct
+                if (product != null) //sacar
                 {
-                    Product = product.ProductId,
-                    Quantity = s.Quantity,
-                    Price = product.Price,
-                    Discount = product.Discount
-                };
-                
 
-                sale.SalesProducts.Add(newSaleProduct);
+
+                    subtotal += product.Price * s.Quantity;
+                    decimal discountProducts = product.Price - (product.Price * (product.Discount / 100.0m));
+                    totalDiscount += (product.Price * s.Quantity) - (discountProducts * s.Quantity);
+
+
+                    var newSaleProduct = new SaleProduct
+                    {
+                        Product = product.ProductId,
+                        Quantity = s.Quantity,
+                        Price = product.Price,
+                        Discount = product.Discount
+                    };
+
+
+
+                    sale.SalesProducts.Add(newSaleProduct);
+
+                }
+
+                else
+                {
+                    errors.Add($"Producto con ID no encontrado.");
+                }
             }
+
+
             sale.Subtotal = subtotal;
             sale.TotalDiscount=totalDiscount;
             sale.TotalPay = (subtotal - totalDiscount) * 1.21m;
 
+            if (sale.TotalPay != request.TotalPayed)
+            {
+                errors.Add($"El total calculado no coincide con el total pagado.");
+            }                                                                       //sacar
 
+            if (errors.Any())
+            {
+                throw new BadRequestException(string.Join(" ", errors));
+            }
+           
 
             await _saleCommand.AddSale(sale);
 
@@ -111,11 +135,11 @@ namespace Application.UseCase.Service
         public async Task<SaleResponse> SaleDetailService(int id)
         {
             var sale = await _querySale.GetSaleById(id);
-            
-            //if (sale == null)
-            //{
-            //    throw new SaleNotFoundException(id);
-            //}
+
+            if (sale == null)
+            {                                                           //sacar afuera
+                throw new SaleNotFoundException(id);
+            }
 
             SaleResponse response = new SaleResponse
             {

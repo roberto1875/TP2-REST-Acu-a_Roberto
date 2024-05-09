@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Models
 {
-    public class CategoryResponce
+    public class CategoryResponse
     {
         public int CategoryId { get; set; }
 

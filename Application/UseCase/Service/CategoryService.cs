@@ -19,12 +19,12 @@ namespace Application.UseCase.Service
             _query = query;
         }
 
-        public async Task<CategoryResponce> GetCategoryById(int id)
+        public async Task<CategoryResponse> GetCategoryById(int id)
         {
             var categoryId = await _query.GetCategoryById(id);   
             if (categoryId != null)
             {
-                CategoryResponce responce = new CategoryResponce
+                CategoryResponse responce = new CategoryResponse
                 {
                     CategoryId = categoryId.CategoryId,
                     Name = categoryId.Name

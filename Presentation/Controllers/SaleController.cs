@@ -1,13 +1,12 @@
 ﻿using Application.Interfaces;
 using Application.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Annotations;
+using static Application.Exceptions.Exceptions;
 
 namespace Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class SaleController : ControllerBase
     {
@@ -24,23 +23,51 @@ namespace Presentation.Controllers
         [SwaggerResponse(400, Description = "Solicitud incorrecta.", Type = typeof(ApiError))]
         public async Task<IActionResult>GetSale([FromQuery(Name = "from")] DateTime? fromDate, [FromQuery(Name = "to")] DateTime? toDate)
         {
-            var result = await _service.GetSaleFilter(fromDate, toDate );
-            return Ok(result);
+
+            if (fromDate.HasValue && toDate.HasValue && fromDate > toDate)
+            {
+                return BadRequest(new ApiError("La fecha inicio es mayor que la fecha fin."));
+            }
+            
+            var result = await _service.GetSaleFilter(fromDate, toDate);
+                return Ok(result);
+            
+            
         }
 
-        [HttpOptions]
+
+        [HttpPost]
+        [SwaggerResponse(201, Description = "Venta registrada con éxito.", Type = typeof(SaleResponse))]
+        [SwaggerResponse(400, Description = "Solicitud incorrecta.", Type = typeof(ApiError))]
         public async Task<IActionResult> RegisterSale(SaleRequest request)
         {
-            var result = await _service.CreateSale(request);
-            return Ok(result);
+            try
+            {
+                var result = await _service.CreateSale(request);
+                return Ok(result);
+            }
+            catch (BadRequestException ex)
+            {
+                return new JsonResult(new ApiError(ex.Message)) { StatusCode = 400 };
+            }
         }
 
+
         [HttpGet("{id}")]
+
+        [SwaggerResponse(200, Description = "Éxito al recuperar los detalles de la venta.", Type = typeof(SaleResponse))]
+        [SwaggerResponse(404, Description = "Venta no encontrada.", Type = typeof(ApiError))]
         public async Task<IActionResult> GetSaleDetail(int id)
         {
-           
-            var result = await _service.SaleDetailService(id);
-            return Ok(result);
+            try
+            {
+                var result = await _service.SaleDetailService(id);
+                return Ok(result);
+            }
+            catch(SaleNotFoundException ex)
+            {
+                return new JsonResult(new ApiError(ex.Message)) { StatusCode = 404 };
+            }
         }
 
     }
@@ -48,21 +75,3 @@ namespace Presentation.Controllers
 
 
 }
-
-
-//[SwaggerOperation(Summary = "Crea un nuevo producto.",
-//            Description = "Permite la creación de un nuevo producto en el sistema.")]
-//[SwaggerResponse(StatusCodes.Status201Created, "Producto creado con éxito", Type = typeof(ProductRequest))]
-//[SwaggerResponse(StatusCodes.Status400BadRequest, "Solicitud incorrecta.", Type = typeof(ApiError))]
-//[SwaggerResponse(StatusCodes.Status409Conflict, "Conflicto, el producto ya existe.", Type = typeof(ApiError))]
-//services.AddSwaggerGen(c =>
-//{
-//    c.SwaggerDoc("v1", new OpenApiInfo
-//    {
-//        Title = "DemoSwaggerAnnotation",
-//        Version = "v1",
-//    });
-//    // Configuración de la descripción de los parametros
-//    // c.ParameterFilter<CustomParameterFilter>();
-//    c.EnableAnnotations();
-//});

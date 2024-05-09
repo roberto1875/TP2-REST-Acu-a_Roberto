@@ -15,6 +15,6 @@ namespace Application.Models
         public decimal Price { get; set; }
         public int Discount { get; set; }
         public string ImageUrl { get; set; }
-        public CategoryResponce Category { get; set; }
+        public CategoryResponse Category { get; set; }
     }
 }

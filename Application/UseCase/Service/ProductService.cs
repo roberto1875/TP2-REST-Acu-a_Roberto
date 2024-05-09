@@ -28,9 +28,10 @@ namespace Application.UseCase.Service
             _productServiceUtils = productServiceUtils;
         }
 
-        public async Task<CreateProductResponce> CreateProduct(CreateProductRequest request)
+        public async Task<ProductResponse> CreateProduct(ProductRequest request)
         {
             var existeName = await _productServiceUtils.FilterProductName(request);
+            await _productServiceUtils.CheckRequest(request);
 
             var product = new Product
             {
@@ -46,9 +47,9 @@ namespace Application.UseCase.Service
             await _command.InsertProduct(product);
             var idCategory = await _serviceCategory.GetCategoryById(request.Category);
 
-            var productResponce = new CreateProductResponce
+            var productResponce = new ProductResponse
             {
-                ProductName = product.Name,
+                Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
                 Discount = product.Discount,
@@ -118,7 +119,7 @@ namespace Application.UseCase.Service
                 Price = product.Price,
                 Discount = product.Discount,
                 ImageUrl = product.ImageUrl,
-                Category = new CategoryResponce
+                Category = new CategoryResponse
                 {
                     CategoryId = product.CategoryTable.CategoryId,
                     Name = product.CategoryTable.Name
@@ -161,7 +162,7 @@ namespace Application.UseCase.Service
                 Price = product.Price,
                 Discount = product.Discount,
                 ImageUrl = product.ImageUrl,
-                Category = new CategoryResponce
+                Category = new CategoryResponse
                 {
                     CategoryId = product.CategoryTable.CategoryId,
                     Name = product.CategoryTable.Name
@@ -190,7 +191,7 @@ namespace Application.UseCase.Service
                 Price = product.Price,
                 Discount = product.Discount,
                 ImageUrl = product.ImageUrl,
-                Category = new CategoryResponce
+                Category = new CategoryResponse
                 {
                     CategoryId = product.CategoryTable.CategoryId,
                     Name = product.CategoryTable.Name
