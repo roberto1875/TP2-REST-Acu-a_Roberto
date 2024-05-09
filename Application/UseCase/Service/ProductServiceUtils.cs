@@ -82,6 +82,17 @@ namespace Application.UseCase.Service
 
         }
 
+        public async Task ChekcProductSale(Guid id)
+        {
+            var product = await _query.GetProductById(id);
+
+            if (product.SaleProducts.Any())
+            {
+                throw new SaleProductException("El producto no se puede eliminar, esta asociado a una venta.");
+            }
+        }
+
+
 
     }
 }

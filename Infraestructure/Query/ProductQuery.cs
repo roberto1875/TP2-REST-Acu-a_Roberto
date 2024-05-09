@@ -35,6 +35,7 @@ namespace Infraestructure.Query
 
             var product = await _context.Products
                 .Include(p => p.CategoryTable)
+                .Include(p => p.SaleProducts)
                 .FirstOrDefaultAsync(p => p.ProductId == id);
            
             return product;

@@ -116,6 +116,11 @@ namespace Presentation.Controllers
             {
                 return new JsonResult(new ApiError(ex.Message)) { StatusCode = 404 };
             }
+            catch(SaleProductException ex)
+            {
+                return new JsonResult(new ApiError(ex.Message)) { StatusCode = 409 };
+            }
+
         }
     }
 }

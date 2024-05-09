@@ -39,5 +39,16 @@ namespace Application.Exceptions
             {
             }
         }
+
+        public class SaleProductException : Exception
+        {
+            public SaleProductException(string message)
+                : base(message)
+            {
+            }
+        }
+
+
+
     }
 }

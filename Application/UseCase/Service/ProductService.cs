@@ -115,7 +115,7 @@ namespace Application.UseCase.Service
                 Id = product.ProductId,
                 Name = product.Name,
                 Description = product.Description,
-                Price = (double)product.Price,
+                Price = product.Price,
                 Discount = product.Discount,
                 ImageUrl = product.ImageUrl,
                 Category = new CategoryResponce
@@ -176,9 +176,11 @@ namespace Application.UseCase.Service
         public async Task<ProductResponse> DeleteProductService(Guid id)
         {
             var product = await _query.GetProductById(id);
-
+           
+            await _productServiceUtils.ProductExists(id);
+            await _productServiceUtils.ChekcProductSale(id);
             await _command.DeleteProduct(product);
-
+            
             var productResponse = new ProductResponse
             {
 
