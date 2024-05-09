@@ -103,8 +103,8 @@ namespace Infraestructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(2147483647)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Discount")
                         .HasColumnType("int");
@@ -130,7 +130,7 @@ namespace Infraestructure.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = new Guid("3da6795d-4684-42ab-b1ac-059fb958bf28"),
+                            ProductId = new Guid("9b74566b-60f5-4e63-939a-a09c0037c1e8"),
                             Category = 1,
                             Description = "Lavarropa automatico Drean Next 6.06 Eco, 6kl, Blanco",
                             Discount = 20,
@@ -140,7 +140,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("9648780d-c63a-4847-981b-18f200e13765"),
+                            ProductId = new Guid("c78611d9-f83f-43fd-bc68-f58947c27c04"),
                             Category = 1,
                             Description = "Microonda Daewoo, 23 Litros Bifunción D223dg",
                             Discount = 20,
@@ -150,7 +150,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("55121716-f5f8-4d48-8151-4353aab8be91"),
+                            ProductId = new Guid("73a515cb-2f77-41e2-8604-78392ac915df"),
                             Category = 1,
                             Description = "Heladera Conqueror, 329L 2F-1600bda ",
                             Discount = 20,
@@ -160,7 +160,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("1a5bef09-74f0-4851-a257-025c739444e4"),
+                            ProductId = new Guid("ebca9848-782e-407f-9f8f-9d88c8b6a8e7"),
                             Category = 1,
                             Description = " Cocina Florencia 5518F Inoxidable Multigas Con 4 Hornallas",
                             Discount = 20,
@@ -170,7 +170,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("08416f69-3583-4c90-928b-d0d455b2a500"),
+                            ProductId = new Guid("d05af8ee-97ac-46b1-bf22-6fb269bfec22"),
                             Category = 2,
                             Description = "Celular Liberado A34 Gris 128 Gb, Ram 6 Gb, Octa Core",
                             Discount = 0,
@@ -180,7 +180,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("61fa0f65-7500-44e2-90f1-29bb26c1ddef"),
+                            ProductId = new Guid("d67e9c3f-2306-4ba2-904b-6dc2538bdcd6"),
                             Category = 2,
                             Description = "Notebook Cel Fire Glw2, Ram 4G, SSD 128 Gb, Pantalla 14",
                             Discount = 0,
@@ -190,7 +190,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("77a0891a-35c8-44da-9165-4de892ff8937"),
+                            ProductId = new Guid("ec8422ac-374c-47f8-902d-3e0a79c9c7ee"),
                             Category = 2,
                             Description = "Joystick Robot Con Conexión Inalámbrica, Microsoft",
                             Discount = 0,
@@ -200,7 +200,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("51bd01f1-8688-4966-9241-06531ddaa399"),
+                            ProductId = new Guid("9e2b0162-b233-46e9-9fe0-b268495efb77"),
                             Category = 2,
                             Description = "Tablet Wave 7 Dual I726a10, 2Gb, Ram 16Gb, Wifi",
                             Discount = 0,
@@ -210,7 +210,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("95c6c15f-63c3-4ddf-b04e-ec324d47135e"),
+                            ProductId = new Guid("c2e71e36-090d-4853-b118-2e782f253ce2"),
                             Category = 3,
                             Description = "Reloj Inteligente, Negro, Bluetooth, Android, Notificaciones, Resistente al agua",
                             Discount = 0,
@@ -220,7 +220,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("498f3033-9878-4153-a597-23b2368aaa9f"),
+                            ProductId = new Guid("345fe562-4ffa-41df-8118-088182eb14b1"),
                             Category = 3,
                             Description = "Anteojos de sol, Negro mate, lente gris ",
                             Discount = 0,
@@ -230,7 +230,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("d28f55a7-13e5-4f4c-b91a-b769250b0f86"),
+                            ProductId = new Guid("80648e78-49e9-482c-aa57-ae707b613023"),
                             Category = 3,
                             Description = "Zapatillas de running, color negro, talle 44",
                             Discount = 0,
@@ -240,7 +240,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("940eb2e5-8520-401c-bf4f-55ebf9934848"),
+                            ProductId = new Guid("942431e4-48e5-41ea-9ef5-706fd1cd0ed5"),
                             Category = 3,
                             Description = "Riñonera Adicolor Classic",
                             Discount = 0,
@@ -250,7 +250,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("bf1eb3d3-b51f-4f47-b751-e0570c2bda4f"),
+                            ProductId = new Guid("2c53350d-6ee7-4445-9137-019715d7a1eb"),
                             Category = 4,
                             Description = "Colchón 1 Plaza Resorte Bonnell Babel 0.80 X 1.90",
                             Discount = 0,
@@ -260,7 +260,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("90a92d74-583f-4e31-9416-e937acdd6120"),
+                            ProductId = new Guid("8d33b667-9445-42f6-b0de-0f194434daba"),
                             Category = 4,
                             Description = "Sillón De 3 Cuerpos, Esquinero,1.85Mts, Chenille Gris ",
                             Discount = 0,
@@ -270,7 +270,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("3c7699a0-35ca-48a8-8107-d30960f68170"),
+                            ProductId = new Guid("0653e07c-b3b1-433e-b473-a01c00874d7e"),
                             Category = 4,
                             Description = "Divan Cama Pacifico, Madera, Ancho 90 Cm, largo 204 Cm",
                             Discount = 0,
@@ -280,7 +280,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("a3fa73c6-c249-4c96-9f1e-dbce31d788e4"),
+                            ProductId = new Guid("faaa3eee-4d88-4662-a1df-6bab00812a5e"),
                             Category = 4,
                             Description = "Silla Comedor, Nórdica Eames, Diseño Moderno, Color Verde",
                             Discount = 0,
@@ -290,7 +290,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("aa4048d9-f5f3-42d2-b422-e1d312e428be"),
+                            ProductId = new Guid("cb28c377-70e5-4adb-b66c-6d851f57b05b"),
                             Category = 5,
                             Description = "Lavable Con Agua, Recargable, Color Negro",
                             Discount = 0,
@@ -300,7 +300,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("ddc86d5a-5038-488d-bdea-4a4433e51cf8"),
+                            ProductId = new Guid("c08b5aab-3b83-4e65-8fbc-71c80f6ad9f0"),
                             Category = 5,
                             Description = "Uso En Humedo, No recargable, Potencia Total 2400 ",
                             Discount = 0,
@@ -310,7 +310,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("9d4e42fd-f6d2-4b1e-8a62-3debc0df7091"),
+                            ProductId = new Guid("acdc4528-9ddf-4852-a629-2affb5be62dc"),
                             Category = 5,
                             Description = "Planchita de pelo, No recargable, Potencia Total 2400 ",
                             Discount = 0,
@@ -320,7 +320,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("a5397067-d82c-4e24-a6db-8ece92f37567"),
+                            ProductId = new Guid("25fda333-7589-40b5-a764-b6aea9e2b320"),
                             Category = 5,
                             Description = "Balanza Digital Vidrio Templado Hasta 150Kg",
                             Discount = 0,
@@ -330,7 +330,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("d9a4d325-e673-4ef9-898b-068588496974"),
+                            ProductId = new Guid("7cb16dfc-c3e3-4037-8e0e-4f7bfed7bfe1"),
                             Category = 6,
                             Description = "Con regulador, Visera, Color Azul",
                             Discount = 0,
@@ -340,7 +340,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("b02339db-3d36-4285-98d1-8ff2cfd82e04"),
+                            ProductId = new Guid("62652dd1-26a7-4a3b-af77-98fc8bc1ec6e"),
                             Category = 6,
                             Description = "Rodado 29, Talle 18, Color Blanco",
                             Discount = 0,
@@ -350,7 +350,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("1c51895e-a75e-483f-b206-6ac9dc201a60"),
+                            ProductId = new Guid("dd16d78d-2de9-4c7b-984d-76ad05abdf40"),
                             Category = 6,
                             Description = "Velocidad 12 Km/h, Peso Máximo Soportado 100 kl",
                             Discount = 0,
@@ -360,7 +360,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("eb35843e-5ea0-492b-876a-b8146ef60685"),
+                            ProductId = new Guid("24f5e33f-de5a-40e4-87b4-98d779e32135"),
                             Category = 6,
                             Description = "Rodado 26, Con 7 Velocidades,Talle 18, Color Azul",
                             Discount = 0,
@@ -370,7 +370,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("b50fa98f-2049-408c-a6c2-7b28701f7a81"),
+                            ProductId = new Guid("418b2c87-ce2a-49ad-80fa-e53fb3adfe13"),
                             Category = 7,
                             Description = "Con Lentejuelas Reversibles y Protecciones, Talle 36",
                             Discount = 0,
@@ -380,7 +380,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("c9451962-9198-4963-9d18-de05a83d199e"),
+                            ProductId = new Guid("703072b3-4440-4e26-bf8f-8b3230ceae8b"),
                             Category = 7,
                             Description = "Silla de comer, Color rosa",
                             Discount = 0,
@@ -390,7 +390,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("c738ba3b-18bb-4458-9347-81e09791c4e2"),
+                            ProductId = new Guid("19f7128a-f6bc-4adf-be23-f505dbb7c5b9"),
                             Category = 7,
                             Description = "Caminador musical con panel didactico",
                             Discount = 0,
@@ -400,7 +400,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("43f39e14-00c8-489e-bee4-d2309f8860d3"),
+                            ProductId = new Guid("b61b5a8c-c75f-4e2c-b642-0806d49276dc"),
                             Category = 7,
                             Description = "Moto a batería, Color azul y negro",
                             Discount = 0,
@@ -410,7 +410,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("822873fa-3bd4-4493-96ab-f8987c7f5489"),
+                            ProductId = new Guid("470e7424-0f8c-4fb3-b5ac-5f5b8ac37776"),
                             Category = 8,
                             Description = "Gaseosa 500 ml",
                             Discount = 0,
@@ -420,7 +420,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("72ff9828-19d7-436d-94b1-cc26435e0c65"),
+                            ProductId = new Guid("9ede373f-ebeb-48c0-9aef-fb9cb9f3313f"),
                             Category = 8,
                             Description = "Vino malbec 750 ml",
                             Discount = 0,
@@ -430,7 +430,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("1f5c9ba8-9b18-428f-8348-2000e62ec08f"),
+                            ProductId = new Guid("0750083e-dabd-4c5f-9995-c454ad711bb1"),
                             Category = 8,
                             Description = "Cafe torrado, 170 GR",
                             Discount = 0,
@@ -440,7 +440,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("e1eb20b6-0f03-4e14-afad-062848f5ff36"),
+                            ProductId = new Guid("0ac8c8a4-fa71-4f7b-825c-aed4e78e63cb"),
                             Category = 8,
                             Description = "Ferrero x140g",
                             Discount = 0,
@@ -450,7 +450,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("d996fb77-a8e1-4aff-99c8-c814eddba425"),
+                            ProductId = new Guid("c4834922-c7f6-4eee-a8c7-00d422ceddd9"),
                             Category = 9,
                             Description = "Autor Dibu Martinez, Libro tapa blanda",
                             Discount = 0,
@@ -460,7 +460,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("65f3a6e1-7a4c-4c4d-a2cd-cb5effd0628b"),
+                            ProductId = new Guid("ab66afba-77da-4bba-adea-8b5496605fad"),
                             Category = 9,
                             Description = "Autor Michael Crichton, Libro tipo bolsillo",
                             Discount = 0,
@@ -470,7 +470,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("aa941147-5944-4569-bcda-d080af37e814"),
+                            ProductId = new Guid("29a21ee2-535b-4750-87af-6a85b413a287"),
                             Category = 9,
                             Description = "Autor Rick Riordan, Libro tapa blanda",
                             Discount = 0,
@@ -480,7 +480,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("8583e23b-2ed1-4630-a367-a20092fa637e"),
+                            ProductId = new Guid("e792cffb-1561-4ea7-99a5-58f7df27b777"),
                             Category = 9,
                             Description = "Autor Ernest Cline, Libro tapa blanda",
                             Discount = 0,
@@ -490,7 +490,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("94013188-d7a9-4c89-987d-3768010a963d"),
+                            ProductId = new Guid("43386dc5-62ec-451c-9b18-4b2c26481a83"),
                             Category = 10,
                             Description = "Material madera",
                             Discount = 0,
@@ -500,7 +500,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("2ef8edfc-84db-475e-a969-aa9ace5ace0b"),
+                            ProductId = new Guid("2f8fc42b-0e05-4e56-8327-28fe3c59f1e2"),
                             Category = 10,
                             Description = "Material madera",
                             Discount = 0,
@@ -510,7 +510,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("4a404d8d-b936-421a-aace-789fdb56c766"),
+                            ProductId = new Guid("90c352bb-3edb-40e2-9a18-a0e80593420f"),
                             Category = 10,
                             Description = "Parrilla portátil, plegable para camping",
                             Discount = 0,
@@ -520,7 +520,7 @@ namespace Infraestructure.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("8eedd19a-6252-49c8-9de0-7a6c31531698"),
+                            ProductId = new Guid("c59aebb8-d715-47b0-8583-ed510c135b75"),
                             Category = 10,
                             Description = "Gazebo de 6X3, con puerta y ventanas, Color blanco",
                             Discount = 0,
